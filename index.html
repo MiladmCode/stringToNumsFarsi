@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive Input Page</title>
+    <title>Farsi String To Nums</title>
     <style>
         * {
             box-sizing: border-box;
@@ -31,7 +31,7 @@
             text-align: center;
         }
 
-        input[type="text"] {
+        textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 1rem;
@@ -67,8 +67,8 @@
     <div class="container">
         <h2>Enter Your Number</h2>
         <form id="textForm">
-            <input type="text" id="userInput" value="نوزده میلیارد و هشتصد و بیست و چهار هزار و صد و یک"
-                placeholder="Type something..." required />
+
+            <textarea type="text" id="userInput" rows="5" required />نوزده میلیارد و هشتصد و بیست و چهار هزار و صد و یک</textarea>
             <button type="submit">Submit</button>
         </form>
         <div class="result" id="resultDisplay"></div>
