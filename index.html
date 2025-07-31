@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farsi String To Nums</title>
+    <title>Responsive Input Page</title>
     <style>
         * {
             box-sizing: border-box;
@@ -93,6 +93,7 @@
 
             // Seperate Levels
             const levels = str.split(" و ");
+            console.log(levels);
 
             let number = 0;
             for (const level of levels) {
@@ -103,7 +104,10 @@
                     if (yeki[part]) partNum += yeki[part];
                     if (dahTayi[part]) partNum += dahTayi[part];
                     if (sadTayi[part]) partNum += sadTayi[part];
-                    if (scales[part]) partNum *= scales[part];
+                    if (scales[part]) {
+                        if(!partNum) number *= scales[part];
+                        if(partNum) partNum *= scales[part];
+                    }
                 }
                 number += partNum;
             }
