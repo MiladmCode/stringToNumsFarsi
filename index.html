@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Input Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            font-weight: bold;
+            color: #374151;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Enter Your Number</h2>
+        <form id="textForm">
+            <input type="text" id="userInput" value="نوزده میلیارد و هشتصد و بیست و چهار هزار و صد و یک"
+                placeholder="Type something..." required />
+            <button type="submit">Submit</button>
+        </form>
+        <div class="result" id="resultDisplay"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('textForm');
+        const input = document.getElementById('userInput');
+        const result = document.getElementById('resultDisplay');
+
+        function handleSubmit(text) {
+            return strToNumber(text);
+        }
+
+
+        function strToNumber(numString) {
+            const yeki = { یک: 1, دو: 2, سه: 3, چهار: 4, پنج: 5, شش: 6, هفت: 7, هشت: 8, نه: 9, ده: 10, یازده: 11, دوازده: 12, سیزده: 13, چهارده: 14, پانزده: 15, شازده: 16, هفده: 17, هجده: 18, نوزده: 19 }, dahTayi = { بیست: 20, سی: 30, چهل: 40, پنجاه: 50, شصت: 60, هفتاد: 70, هشتاد: 80, نود: 90 }, sadTayi = { صد: 100, دویست: 200, سیصد: 300, چهارصد: 400, پانصد: 500, ششصد: 600, هفتصد: 700, هشتصد: 800, نهصد: 900 }, scales = { هزار: 1e3, میلیون: 1e6, میلیارد: 1e9 };
+
+            // Get rid of extra و
+            const regEx = new RegExp(Object.keys(scales).join("|"), "g");
+            const str = numString.replaceAll(" و ", ' ').replace(regEx, m => m + " و ");
+
+            // Seperate Levels
+            const levels = str.split(" و ");
+
+            let number = 0;
+            for (const level of levels) {
+                const parts = level.split(" ").filter(num => num);
+
+                let partNum = 0;
+                for (const part of parts) {
+                    if (yeki[part]) partNum += yeki[part];
+                    if (dahTayi[part]) partNum += dahTayi[part];
+                    if (sadTayi[part]) partNum += sadTayi[part];
+                    if (scales[part]) partNum *= scales[part];
+                }
+                number += partNum;
+            }
+
+            const formatter = num => Intl.NumberFormat().format(num);
+            return formatter(number);
+        }
+
+
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const userText = input.value.trim();
+            if (userText) {
+                const output = handleSubmit(userText);
+                result.textContent = output;
+            }
+        });
+    </script>
+</body>
+
+</html>
